@@ -213,17 +213,65 @@
             box-shadow: 0 0 0 0.25rem rgba(17, 121, 74, 0.2); 
             color: var(--primary-green);
         }
+
+        #sidebar, #page-content, .sidebar-brand, .nav-link, .sidebar-heading, .sidebar-header {
+            transition: all 0.3s ease-in-out;
+        }
+
+        body.sidebar-toggled #sidebar {
+            min-width: 80px;
+            max-width: 80px;
+        }
+
+        body.sidebar-toggled #page-content {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+        }
+
+        body.sidebar-toggled .brand-text,
+        body.sidebar-toggled .brand-icon {
+            display: none; 
+        }
+        
+        body.sidebar-toggled .sidebar-header {
+            justify-content: center !important; 
+            padding: 0 !important;
+        }
+
+        body.sidebar-toggled .nav-link {
+            font-size: 0; 
+            justify-content: center;
+            padding: 15px 0;
+        }
+        body.sidebar-toggled .nav-link i {
+            font-size: 1.2rem;
+            margin-right: 0;
+        }
+
+        body.sidebar-toggled .sidebar-heading {
+            display: none;
+        }
     </style>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem('sidebarState') === 'mini') {
+            document.body.classList.add('sidebar-toggled');
+        }
+    </script>
 
     <div id="wrapper">
         
         <nav id="sidebar">
-            <a class="sidebar-brand" href="{{ route('dashboard') }}">
-                <i class="fa-solid fa-layer-group text-primary me-2"></i>
-                Tirta<span class="text-primary">Dev</span>
-            </a>
+            <div class="sidebar-header d-flex align-items-center justify-content-between px-4" style="height: 80px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
+                <a class="sidebar-brand m-0 p-0 border-0 d-flex align-items-center text-decoration-none text-white fw-bold fs-4" href="{{ route('dashboard') }}">
+                    <i class="fa-solid fa-layer-group text-primary me-2 brand-icon"></i>
+                    <span class="brand-text">Tirta<span class="text-primary">Dev</span></span>
+                </a>
+                <button id="sidebarToggle" class="btn btn-link shadow-none p-0 text-decoration-none">
+                    <i class="fa-solid fa-bars fa-lg text-primary"></i>
+                </button>
+            </div>
 
             <ul class="sidebar-nav">
                 <li class="nav-item">
@@ -262,7 +310,7 @@
             <div class="top-navbar">
                 <div class="text-muted fw-bold small">
                     <i class="fa-solid fa-calendar-day me-2"></i> {{ date('d F Y') }}
-                </div>
+                </div>   
                 <div class="ms-auto d-flex align-items-center">
                     <span class="text-dark fw-bold me-2">Administrator</span>
                     <i class="fa-solid fa-circle-user text-primary fa-2x"></i>
@@ -369,6 +417,23 @@
                     });
                 });
             });
+
+        const sidebarToggle = document.getElementById('sidebarToggle');
+            const body = document.body;
+
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    body.classList.toggle('sidebar-toggled');
+
+                    if (body.classList.contains('sidebar-toggled')) {
+                        localStorage.setItem('sidebarState', 'mini');
+                    } else {
+                        localStorage.setItem('sidebarState', 'full');
+                    }
+                });
+            }
         });
     </script>
 </body>

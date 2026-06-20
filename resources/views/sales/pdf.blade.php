@@ -20,7 +20,7 @@
 <body>
 
     <div class="header">
-        <h2>Laporan Data Master Sales (Tabel D)</h2>
+        <h2>Laporan Data Master Sales</h2>
         <p>Dicetak pada tanggal: {{ date('d-m-Y H:i:s') }} | Sistem Administrasi Tirta Dev</p>
     </div>
 

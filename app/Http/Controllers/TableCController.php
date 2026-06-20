@@ -34,7 +34,7 @@ class TableCController extends Controller
         ]);
 
         $this->tableCService->create($validated);
-        return redirect()->back()->with('success', 'Data Tabel C berhasil ditambahkan!');
+        return redirect()->back()->with('success', 'Data Area berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
@@ -44,31 +44,31 @@ class TableCController extends Controller
         ]);
 
         $this->tableCService->update($id, $validated);
-        return redirect()->back()->with('success', 'Data Tabel C berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Data Area berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $this->tableCService->delete($id);
-        return redirect()->back()->with('success', 'Data Tabel C berhasil dihapus!');
+        return redirect()->back()->with('success', 'Data Area berhasil dihapus!');
     }
 
     public function importExcel(Request $request)
     {
         $request->validate(['file_excel' => 'required|mimes:xlsx,xls']);
         Excel::import(new TableCImport, $request->file('file_excel'));
-        return redirect()->back()->with('success', 'Data Tabel C berhasil di-import!');
+        return redirect()->back()->with('success', 'Data Area berhasil di-import!');
     }
 
     public function exportExcel()
     {
-        return Excel::download(new TableCExport, 'Data_Tabel_C.xlsx');
+        return Excel::download(new TableCExport, 'Data_Area.xlsx');
     }
 
     public function exportPdf()
     {
         $table_c_data = $this->tableCService->getAll();
         $pdf = Pdf::loadView('table_c.pdf', compact('table_c_data'));
-        return $pdf->stream('Data_Tabel_C.pdf');
+        return $pdf->stream('Data_Area.pdf');
     }
 }

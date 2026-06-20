@@ -143,7 +143,7 @@
                     <div class="mb-4">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <label class="form-label small fw-bold text-muted m-0">Pilih File (.xlsx, .xls)</label>
-                            <a href="{{ asset('templates/template_toko_table_a.xlsx') }}" download class="text-decoration-none small text-primary fw-bold">
+                            <a href="{{ asset('templates/template_toko.xlsx') }}" download class="text-decoration-none small text-primary fw-bold">
                                 <i class="fa-solid fa-download me-1"></i>Download Template
                             </a>
                         </div>

@@ -46,13 +46,13 @@ class TableBController extends Controller
 
         $this->tableBService->updateTransaction($id, $validatedData);
 
-        return redirect()->route('table_b.index')->with('success', 'Data Tabel B berhasil diperbarui!');
+        return redirect()->route('table_b.index')->with('success', 'Data Transaksi berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
         $this->tableBService->deleteTransaction($id);
-        return redirect()->back()->with('success', 'Data Tabel B berhasil dihapus!');
+        return redirect()->back()->with('success', 'Data Transaksi berhasil dihapus!');
     }
 
     public function importExcel(Request $request)
@@ -63,18 +63,18 @@ class TableBController extends Controller
 
         Excel::import(new TableBImport, $request->file('file_excel'));
 
-        return redirect()->back()->with('success', 'Data Tabel B berhasil di-import dari Excel!');
+        return redirect()->back()->with('success', 'Data Transaksi berhasil di-import dari Excel!');
     }
 
     public function exportExcel()
     {
-        return Excel::download(new TableBExport, 'Data_Tabel_B.xlsx');
+        return Excel::download(new TableBExport, 'Data_Transaksi.xlsx');
     }
 
     public function exportPdf()
     {
         $table_b_data = $this->tableBService->getAllTransactions();
         $pdf = Pdf::loadView('table_b.pdf', compact('table_b_data'));
-        return $pdf->stream('Data_Tabel_B.pdf');
+        return $pdf->stream('Data_Transaksi.pdf');
     }
 }

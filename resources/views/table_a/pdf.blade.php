@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Data Toko (Tabel A)</title>
+    <title>Laporan Data Toko</title>
     <style>
         body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #2c3e50; margin: 30px; font-size: 14px; }
         .header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid #3498db; }
@@ -20,7 +20,7 @@
 <body>
 
     <div class="header">
-        <h2>Laporan Data Toko (Tabel A)</h2>
+        <h2>Laporan Data Toko</h2>
         <p>Dicetak pada tanggal: {{ date('d-m-Y H:i:s') }} | Sistem Administrasi Tirta Dev</p>
     </div>
 
