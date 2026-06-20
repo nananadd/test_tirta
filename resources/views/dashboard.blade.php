@@ -14,7 +14,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col me-2">
-                        <div class="text-xs fw-bold text-primary text-uppercase mb-1">Total Toko (Tabel A)</div>
+                        <div class="text-xs fw-bold text-primary text-uppercase mb-1">Total Toko</div>
                         <div class="h3 mb-0 fw-bold text-gray-800">{{ $total_toko ?? '5' }}</div>
                     </div>
                     <div class="col-auto"><i class="fa-solid fa-store fa-2x text-primary opacity-50"></i></div>
@@ -28,8 +28,8 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col me-2">
-                        <div class="text-xs fw-bold text-success text-uppercase mb-1">Total Transaksi (Tabel B)</div>
-                        <div class="h3 mb-0 fw-bold text-gray-800">{{ $total_transaksi ?? '5' }}</div>
+                        <div class="text-xs fw-bold text-success text-uppercase mb-1">Total Transaksi</div>
+                        <div class="h3 mb-0 fw-bold text-gray-800">Rp {{ $total_transaksi }}</div>
                     </div>
                     <div class="col-auto"><i class="fa-solid fa-money-bill-wave fa-2x text-success opacity-50"></i></div>
                 </div>
@@ -42,7 +42,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col me-2">
-                        <div class="text-xs fw-bold text-info text-uppercase mb-1">Total Area (Tabel C)</div>
+                        <div class="text-xs fw-bold text-info text-uppercase mb-1">Total Area</div>
                         <div class="h3 mb-0 fw-bold text-gray-800">{{ $total_area ?? '5' }}</div>
                     </div>
                     <div class="col-auto"><i class="fa-solid fa-map-location-dot fa-2x text-info opacity-50"></i></div>
@@ -56,7 +56,7 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col me-2">
-                        <div class="text-xs fw-bold text-warning text-uppercase mb-1">Total Sales (Tabel D)</div>
+                        <div class="text-xs fw-bold text-warning text-uppercase mb-1">Total Sales</div>
                         <div class="h3 mb-0 fw-bold text-gray-800">{{ $total_sales ?? '5' }}</div>
                     </div>
                     <div class="col-auto"><i class="fa-solid fa-user-tie fa-2x text-warning opacity-50"></i></div>
@@ -100,7 +100,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const dataValues = [
             {{ $total_toko ?? 0 }}, 
-            {{ $total_transaksi ?? 0 }}, 
+            {{ $count_transaksi ?? 0 }}, 
             {{ $total_area ?? 0 }}, 
             {{ $total_sales ?? 0 }}
         ];
