@@ -1,0 +1,137 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="row mb-4 align-items-center">
+    <div class="col-md-4">
+        <h3 class="fw-bold text-dark m-0"><i class="fa-solid fa-money-bill-wave text-success me-2"></i> Data Transaksi</h3>
+        <p class="text-muted small m-0 mt-1">Kelola data transaksi.</p>
+    </div>
+    <div class="col-md-8 text-md-end mt-3 mt-md-0">
+        <button class="btn btn-primary btn-custom shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#createModal">
+            <i class="fa-solid fa-plus me-1"></i> Tambah Data
+        </button>
+        <button class="btn btn-success btn-custom shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <i class="fa-solid fa-cloud-arrow-up me-1"></i> Import
+        </button>
+        <a href="{{ route('table_b.export.excel') }}" class="btn btn-outline-success btn-custom me-2 btn-preview-excel"><i class="fa-solid fa-file-excel"></i> Excel</a>
+        <a href="{{ route('table_b.export.pdf') }}" target="_blank" class="btn btn-outline-danger btn-custom"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+    </div>
+</div>
+
+<div class="card bg-white shadow-sm border-0" style="border-radius: 16px;">
+    <div class="card-body p-0">
+        <div class="table-responsive p-4">
+            <table class="table table-hover align-middle m-0">
+                <thead>
+                    <tr>
+                        <th style="width: 5%" class="text-center">No</th>
+                        <th>Kode Toko</th>
+                        <th>Nominal Transaksi</th>
+                        <th style="width: 15%" class="text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($table_b_data as $index => $item)
+                    <tr>
+                        <td class="text-center text-muted fw-bold">{{ $index + 1 }}</td>
+                        <td><span class="badge bg-success bg-opacity-10 text-success border border-success px-3 py-2" style="border-radius: 8px;">{{ $item->kode_toko }}</span></td>
+                        <td class="fw-bold text-success">Rp {{ number_format($item->nominal_transaksi, 2, ',', '.') }}</td>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-center gap-2">
+                                <button class="btn btn-sm btn-warning text-dark fw-bold" style="border-radius: 8px;" data-bs-toggle="modal" data-bs-target="#editModal{{ $item->kode_toko }}"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <form action="{{ route('table_b.destroy', $item->kode_toko) }}" method="POST">
+                                    @csrf @method('DELETE')
+                                    <button type="button" class="btn btn-sm btn-danger fw-bold btn-delete" style="border-radius: 8px;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <tr><td colspan="4" class="text-center py-5 text-muted"><i class="fa-regular fa-folder-open fa-3x mb-3 d-block"></i>Belum ada data transaksi.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@foreach($table_b_data as $item)
+<div class="modal fade" id="editModal{{ $item->kode_toko }}" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="fw-bold text-dark"><i class="fa-solid fa-pen-to-square text-warning me-2"></i>Edit Transaksi</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('table_b.update', $item->kode_toko) }}" method="POST">
+                    @csrf @method('PUT')
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Kode Toko (Primary Key)</label>
+                        <input type="text" class="form-control bg-light text-muted" value="{{ $item->kode_toko }}" readonly>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-muted">Nominal Transaksi</label>
+                        <input type="number" step="0.01" class="form-control" name="nominal_transaksi" value="{{ $item->nominal_transaksi }}" required>
+                    </div>
+                    <button type="button" class="btn btn-warning w-100 fw-bold text-dark btn-confirm-edit" style="border-radius: 10px;">Simpan Perubahan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="fw-bold text-dark"><i class="fa-solid fa-plus text-primary me-2"></i>Tambah Data Baru</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('table_b.store') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">Kode Toko</label>
+                        <input type="number" class="form-control" name="kode_toko" placeholder="Kode Toko" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-muted">Nominal Transaksi</label>
+                        <input type="number" step="0.01" class="form-control" name="nominal_transaksi" placeholder="Nominal Transaksi" required>
+                    </div>
+                    <button type="button" class="btn btn-primary w-100 fw-bold btn-confirm-create" style="border-radius: 10px;">Simpan Data</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow" style="border-radius: 16px;">
+            <div class="modal-header border-bottom-0 pb-0">
+                <h5 class="fw-bold text-dark"><i class="fa-solid fa-cloud-arrow-up text-success me-2"></i>Import Excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ route('table_b.import') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <label class="form-label small fw-bold text-muted m-0">Pilih File (.xlsx, .xls)</label>
+                                <a href="{{ asset('templates/template_transaksi_table_b.xlsx') }}" download class="text-decoration-none small text-primary fw-bold">
+                                    <i class="fa-solid fa-download me-1"></i>Download Template
+                                </a>
+                            </div>
+                            <input type="file" class="form-control" name="file_excel" required>
+                        </div>
+                    <button type="button" class="btn btn-success w-100 fw-bold btn-confirm-import" style="border-radius: 10px;">Upload & Import</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
