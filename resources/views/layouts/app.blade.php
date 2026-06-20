@@ -186,6 +186,33 @@
         
         .form-control { border-radius: 10px; padding: 10px 15px; border: 1px solid #d1eadd; }
         .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(17, 121, 74, 0.2); border-color: var(--primary-green); }
+
+        .pagination {
+            margin-bottom: 0;
+        }
+
+        .pagination .page-link {
+            color: var(--primary-green); 
+            border-color: #E5F6ED;
+            font-weight: 600;
+        }
+
+        .pagination .page-link:hover {
+            background-color: var(--primary-green-light);
+            color: var(--primary-green-hover);
+            border-color: #c7ebd7;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+        }
+
+        .pagination .page-link:focus {
+            box-shadow: 0 0 0 0.25rem rgba(17, 121, 74, 0.2); 
+            color: var(--primary-green);
+        }
     </style>
 </head>
 <body>

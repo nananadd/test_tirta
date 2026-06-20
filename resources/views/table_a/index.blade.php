@@ -3,10 +3,10 @@
 @section('content')
 <div class="row mb-4 align-items-center">
     <div class="col-md-4">
-        <h3 class="fw-bold text-dark m-0"><i class="fa-solid fa-store text-primary me-2"></i> Data Toko</h3>
-        <p class="text-muted small m-0 mt-1">Kelola data master toko.</p>
+        <h3 class="fw-bold text-dark m-0 ms-3"><i class="fa-solid fa-store text-primary me-2"></i> Data Toko</h3>
+        <p class="text-muted small m-0 mt-1 ms-3">Kelola data master toko.</p>
     </div>
-    <div class="col-md-8 text-md-end mt-3 mt-md-0">
+    <div class="col-md-8 text-md-end mt-3 mt-md-0 pe-3">
         <button class="btn btn-primary btn-custom shadow-sm me-2" data-bs-toggle="modal" data-bs-target="#createModal">
             <i class="fa-solid fa-plus me-1"></i> Tambah Data
         </button>
@@ -20,6 +20,24 @@
 
 <div class="card bg-white shadow-sm border-0" style="border-radius: 16px;">
     <div class="card-body p-0">
+        <div class="card-body p-4 pb-0">
+            <form method="GET" action="{{ route('table_a.index') }}" id="searchForm">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+
+                    <input type="text"
+                        id="searchInput"
+                        name="search"
+                        class="form-control"
+                        placeholder="Cari kode atau nama toko..."
+                        value="{{ request('search') }}"
+                        onkeyup="searchData()">
+                </div>
+            </form>
+        </div>
+
         <div class="table-responsive p-4">
             <table class="table table-hover align-middle m-0">
                 <thead>
@@ -53,6 +71,9 @@
                     @endforelse
                 </tbody>
             </table>
+            </div> <div class="d-flex justify-content-end mt-4">
+                {{ $table_a_data->links() }}
+            </div>
         </div>
     </div>
 </div>
@@ -134,4 +155,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    let timer;
+
+    function searchData() {
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            localStorage.setItem('searchFocus', 'true');
+            document.getElementById('searchForm').submit();
+        }, 500);
+    }
+
+    window.addEventListener('load', () => {
+        if (localStorage.getItem('searchFocus') === 'true') {
+            const input = document.getElementById('searchInput');
+
+            input.focus();
+
+            const length = input.value.length;
+            input.setSelectionRange(length, length);
+
+            localStorage.removeItem('searchFocus');
+        }
+    });
+</script>
 @endsection

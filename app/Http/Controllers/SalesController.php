@@ -18,9 +18,11 @@ class SalesController extends Controller
         $this->salesService = $salesService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $sales = $this->salesService->getAll();
+        $search = $request->search;
+        $sales = $this->salesService->getPaginated(10, $search);
+
         return view('sales.index', compact('sales'));
     }
 

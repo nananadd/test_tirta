@@ -33,4 +33,14 @@ class SalesService
         $item = Sales::findOrFail($id);
         return $item->delete();
     }
+
+    public function getPaginated($perPage = 10, $search = null)
+    {
+        return Sales::when($search, function ($query) use ($search) {
+                $query->where('kode_sales', 'like', "%{$search}%")
+                    ->orWhere('nama_sales', 'like', "%{$search}%");
+            })
+            ->paginate($perPage)
+            ->withQueryString();
+    }
 }

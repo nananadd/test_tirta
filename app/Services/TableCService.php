@@ -33,4 +33,14 @@ class TableCService
         $item = TableC::findOrFail($id);
         return $item->delete();
     }
+
+    public function getPaginated($perPage = 10, $search = null)
+    {
+        return TableC::when($search, function ($query) use ($search) {
+        $query->where('kode_toko', 'like', "%{$search}%")
+            ->orWhere('area_sales', 'like', "%{$search}%");
+    })
+    ->paginate($perPage)
+    ->withQueryString();
+    }
 }

@@ -35,4 +35,14 @@ class TableBService
         $item = TableB::findOrFail($id);
         return $item->delete();
     }
+
+    public function getPaginated($perPage = 10, $search = null)
+    {
+        return TableB::when($search, function ($query) use ($search) {
+        $query->where('kode_toko', 'like', "%{$search}%")
+            ->orWhere('nominal_transaksi', 'like', "%{$search}%");
+    })
+    ->paginate($perPage)
+    ->withQueryString();
+    }
 }

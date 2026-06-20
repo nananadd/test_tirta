@@ -18,9 +18,11 @@ class TableBController extends Controller
         $this->tableBService = $tableBService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $table_b_data = $this->tableBService->getAllTransactions();
+        $search = $request->search;
+        $table_b_data = $this->tableBService->getPaginated(10, $search);
+
         return view('table_b.index', compact('table_b_data'));
     }
 

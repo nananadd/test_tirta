@@ -18,9 +18,11 @@ class TableAController extends Controller
         $this->tableAService = $tableAService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $table_a_data = $this->tableAService->getAll();
+        $search = $request->search;
+        $table_a_data = $this->tableAService->getPaginated(10, $search);
+        
         return view('table_a.index', compact('table_a_data'));
     }
 

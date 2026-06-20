@@ -18,9 +18,11 @@ class TableCController extends Controller
         $this->tableCService = $tableCService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $table_c_data = $this->tableCService->getAll();
+        $search = $request->search;
+        $table_c_data = $this->tableCService->getPaginated(10, $search);
+
         return view('table_c.index', compact('table_c_data'));
     }
 
